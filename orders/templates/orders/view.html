@@ -1,0 +1,11 @@
+{% extends "orders/base.html" %}
+
+{% block title %}
+	View
+{% endblock %}
+
+{% block content %}
+    {% for td in user.todolist.all %}
+		<p><a href="/view/{{td.id}}">{{td.name}}</a></p>
+    {% endfor %}
+{% endblock %}

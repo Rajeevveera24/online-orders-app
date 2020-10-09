@@ -1,0 +1,21 @@
+{% extends 'orders/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+	Order Details
+{% endblock %}
+
+{% block content %}
+    <h3>Create Order</h3>
+    <form method="post" action="/create/" class="form-group">
+        {% csrf_token %}
+        {{ form | crispy }}
+        <!-- <div class="input-group mb-3">
+        <div class="input-group-prepend">
+        <button type="submit" name="save" class="btn btn-success">Create New</button>
+        </div>{{form.name}}
+        </div> -->
+        <input type="submit" value="Submit">
+        <input type="submit" value="Cancel" onclick= " window.location.href = '{% url 'home' %} '; return false;">
+    </form>
+{% endblock %}
