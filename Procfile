@@ -1,1 +1,1 @@
-web: gunicorn online-orders-app.wsgi --log-file -
+web: gunicorn online_orders.wsgi --log-file -
