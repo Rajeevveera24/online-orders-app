@@ -97,16 +97,17 @@
 	<div class="sidenav">
 		{% block side %}
 			{% if user.is_authenticated %}	
-				<h4>{{ user.username }}</h4>
+				<h4>{{ user.username }} | {{ user.u }}</h4>
 				<hr>
-				<a href="/">Home</a>
+				<!-- <a href="/">Home</a> -->
+				{% if privilege %}
+					<a href = "/register">New User</a>
+				{% endif %}
 				<a href="/create">Order</a>
 				<a href="/view">View Order</a>
-				<a href = "/details">Shop Details</a>
 				<a href = "/logout">Logout</a>
 			{% else %}
 				<a href="/">Home</a>
-				<a href="/register">Register</a>
 				<a href="/login">Login</a>
 			{% endif %}
 		{% endblock %}

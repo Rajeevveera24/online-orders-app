@@ -1,6 +1,13 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+class User_Type(models.Model):
+	privilege = models.BooleanField()
+	user = models.ForeignKey(User, on_delete = models.CASCADE, related_name = "user_priv", null = False)
+
+	def __str__(self):
+		return str(self.user)
+
 class Shop(models.Model):
 	address = models.CharField(max_length = 200)
 	name = models.CharField(max_length = 100)
