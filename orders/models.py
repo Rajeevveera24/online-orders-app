@@ -16,19 +16,25 @@ class Shop(models.Model):
 	def __str__(self):
 		return self.name
 
+class Item(models.Model):
+	name = models.CharField(max_length = 50)
+	desc = models.CharField(max_length = 100)
+	unit = models.CharField(max_length = 10, default = "No.s")
+
+	def __str__(self):
+		return self.name
+
 class Order(models.Model):
 	user = models.ForeignKey(User, on_delete = models.CASCADE, related_name = "user_order", null = False)
-	cat_1 = models.PositiveIntegerField(default = 0)
-	cat_2 = models.PositiveIntegerField(default = 0)
-	cat_3 = models.PositiveIntegerField(default = 0)
-	cat_4 = models.PositiveIntegerField(default = 0)
+	items = models.ManyToManyField(Item, through = "Order_Item", related_name = "ord_item")
 
 	def __str__(self):
 		return str(self.id)
 
-class Item(models.Model):
-	name = models.CharField(max_length = 50)
-	desc = models.CharField(max_length = 100)
+class Order_Item(models.Model):
+	item = models.ForeignKey(Item, on_delete = models.CASCADE)
+	order = models.ForeignKey(Order, on_delete = models.CASCADE)
+	qty = models.PositiveIntegerField()
 
 	def __str__(self):
-		return self.name
+		return str(self.id)
