@@ -25,4 +25,10 @@ class Order(models.Model):
 
 	def __str__(self):
 		return str(self.id)
-	
+
+class Item(models.Model):
+	name = models.CharField(max_length = 50)
+	desc = models.CharField(max_length = 100)
+
+	def __str__(self):
+		return self.name
