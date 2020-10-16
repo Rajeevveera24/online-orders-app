@@ -1,0 +1,23 @@
+{% extends "orders/base.html" %}
+
+{% block title %}
+	New Order
+{% endblock %}
+
+{% block content %}
+    <h1>New Order</h1>
+    <form action ="/create/" method = "POST">
+        {% csrf_token %}
+        {% for it in items %}
+            <div class = "input-group mb-3">
+                <div class = "input-group-prepend">
+                    <div class = "input-group-text">
+                        {{ it.name }} ({{ it.unit }})
+                    </div>
+                </div>
+                <input type = "number" value = "0" min = 0 name = {{it.name}} class = "form-control">
+            </div>
+        {% endfor %}
+        <button type="submit", name="save", value="save", class = "btn btn-success">Save</button>
+    </form>
+{% endblock %}

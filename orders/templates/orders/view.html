@@ -1,22 +1,32 @@
 {% extends "orders/base.html" %}
-
-{% block title %}
-	View Orders
-{% endblock %}
-
+{% block title %}View List{% endblock %}
+ 
 {% block content %}
-    <!-- {% for ord in user.todolist.all %}
-		<p><a href="/view/{{td.id}}">{{td.name}}</a></p>
-    {% endfor %} -->
-    {% if order_list %}
-    	{% for ord in order_list %}
-    		<li>
-    			<a href = "{% url 'order_detail'  ord.id %}">order number: {{ ord.id }} | updated: {{ ord.updated_at }}
-    				{% if privilege %}
-    					| owned by: {{ ord.user }}
-    				{% endif %}
-    			</a>
-    		</li>
-    	{% endfor %}
-    {% endif %}
+    <h1>{{ls.name}}</h1>
+    <form method="post" action="#">
+		{% csrf_token %}
+		{% for item in ls.item_set.all %}
+			<div class = "input-group mb-3">
+				<div class = "input-group-prepend">
+					<div class = "input-group-text">
+						{% if item.complete == True %}
+							<input type="checkbox", value="clicked", name="c{{item.id}}" checked>
+						{% else %}
+							<input type="checkbox", value="clicked", name="c{{item.id}}">
+						{% endif %}
+					</div>
+				</div>
+				<input type = "text" value = {{item.text}} class = "form-control">
+			</div>
+		{% endfor %} 
+		<div class = "input-group mb-3">
+			<div class = "input-group-prepend">
+				<button type="submit", name="newItem", value="newItem", class = "btn btn-success">Add Item</button>
+			</div>
+			<input type="text", name="new">
+		</div>
+
+		<button type="submit", name="save", value="save", class = "btn btn-success">Save</button>
+    
+    </form>
 {% endblock %}

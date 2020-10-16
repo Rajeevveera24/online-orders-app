@@ -1,0 +1,17 @@
+{% extends "orders/base.html" %}
+
+{% block title %}
+	View Items
+{% endblock %}
+
+{% block content %}
+    {% if privilege == True %}
+        {% if item_list %}
+            {% for it in item_list %}
+                <li>
+                    {{it.name}} | Unit: {{it.unit}} 
+                </li>
+            {% endfor %}
+        {% endif %}
+    {% endif %}
+{% endblock %}

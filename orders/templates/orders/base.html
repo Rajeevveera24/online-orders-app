@@ -102,8 +102,11 @@
 				<!-- <a href="/">Home</a> -->
 				{% if privilege %}
 					<a href = "/register">New User</a>
+					<a href = "/item/create/">New Item</a>
+					<a href = "/item/view">View Items</a>
+				{% else %}
+					<a href="/create">New Order</a>
 				{% endif %}
-				<a href="/create">New Order</a>
 				<a href="/view">View Orders</a>
 				<a href = "/logout">Logout</a>
 			{% else %}
