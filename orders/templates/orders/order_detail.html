@@ -1,0 +1,28 @@
+{% extends "orders/base.html" %}
+
+{% block title %}
+	Order: {{ order.id }}
+{% endblock %}
+
+{% block content %}
+	{% if order %}
+	    <h1>Order Number: {{ order.id }}</h1>
+	    <form action="#">
+			{% csrf_token %}
+			{% for it in items %}
+				<div class = "input-group mb-3">
+					<div class = "input-group-prepend">
+						<div class = "input-group-text">
+							{{it.item}}
+						</div>
+					</div>
+					<div class = "input-group-text" style="background-color: white; color: black"> 
+							{{ it.qty }}
+					</div>
+				</div>
+			{% endfor %} 
+	    </form>
+	{% else %}
+		The requested order does not exist
+	{% endif %}
+{% endblock %}

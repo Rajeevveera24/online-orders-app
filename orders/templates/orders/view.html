@@ -1,11 +1,22 @@
 {% extends "orders/base.html" %}
 
 {% block title %}
-	View
+	View Orders
 {% endblock %}
 
 {% block content %}
-    {% for td in user.todolist.all %}
+    <!-- {% for ord in user.todolist.all %}
 		<p><a href="/view/{{td.id}}">{{td.name}}</a></p>
-    {% endfor %}
+    {% endfor %} -->
+    {% if order_list %}
+    	{% for ord in order_list %}
+    		<li>
+    			<a href = "{% url 'order_detail'  ord.id %}">order number: {{ ord.id }} | updated: {{ ord.updated_at }}
+    				{% if privilege %}
+    					| owned by: {{ ord.user }}
+    				{% endif %}
+    			</a>
+    		</li>
+    	{% endfor %}
+    {% endif %}
 {% endblock %}
