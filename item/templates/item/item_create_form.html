@@ -7,10 +7,10 @@
 
 {% block content %}
     <h3>Create Item</h3>
-    <form method="post" action="/item/create/" class="form-group">
+    <form method = "post" action = "" class = "form-group">
         {% csrf_token %}
         {{ form | crispy }}
         <input type="submit" value="Submit">
-        <input type="submit" value="Cancel" onclick= " window.location.href = '{% url 'home' %} '; return false;">
+        <input type="submit" value="Cancel" onclick= " window.location.href = '{% url 'item:item_view' %}'; return false;">
     </form>
 {% endblock %}

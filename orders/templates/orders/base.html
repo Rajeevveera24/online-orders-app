@@ -90,7 +90,7 @@
  
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
  
-	<title>{% block title %}Online Orders{% endblock %}</title>
+	<title>{% block title %}Arun Poultry{% endblock %}</title>
 </head>
  
 <body>
@@ -99,11 +99,9 @@
 			{% if user.is_authenticated %}	
 				<h4>{{ user.username }}</h4>
 				<hr>
-				<!-- <a href="/">Home</a> -->
 				{% if privilege %}
 					<a href = "/register">New User</a>
-					<a href = "/item/create/">New Item</a>
-					<a href = "/item/view">View Items</a>
+					<a href = "/item/view/">Items</a>
 				{% else %}
 					<a href="/create">New Order</a>
 				{% endif %}
@@ -120,7 +118,7 @@
 	<div id="content" name="content" class="main">
 		<!-- <div class="row justify-content-center"> -->
 			<!-- <div class="col-8"> -->
-				<h1 class="mt-2">Online Orders</h1>
+				<h1 class="mt-2">Arun Poultry</h1>
 				<hr class="mt-0 mb-4">
 				{% block content %}
 				{% endblock %}

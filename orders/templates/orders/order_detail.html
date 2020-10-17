@@ -1,4 +1,4 @@
-{% extends "orders/base.html" %}
+{% extends 'orders/base.html' %}
 
 {% block title %}
 	Order: {{ order.id }}
@@ -6,7 +6,8 @@
 
 {% block content %}
 	{% if order %}
-	    <h1>Order Number: {{ order.id }}</h1>
+		<h3>Order Number: {{ order.id }}</h3>
+		<br>
 	    <form action="#">
 			{% csrf_token %}
 			{% for it in items %}

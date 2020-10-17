@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'register.apps.RegisterConfig',
     'orders.apps.OrdersConfig',
+    'item.apps.ItemConfig',
     'crispy_forms',
 ]
 
@@ -124,7 +125,7 @@ USE_TZ = True
 # STATIC_URL = '/static/'
 
 LOGOUT_REDIRECT_URL = '/login'
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = '/home'
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 

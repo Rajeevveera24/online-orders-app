@@ -1,10 +1,12 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Order, Shop, User_Type, Item, Order_Item
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin as LRM
 from django.urls import reverse_lazy, reverse
-from .forms import CreateShopForm, CreateItemForm
+
+from .models import Order, Order_Item, Shop, User_Type
+from item.models import Item
+from .forms import CreateShopForm
 
 def home(response):
     priv = False
@@ -105,49 +107,6 @@ class OrderCreateView(LRM, View):
 #         order.save()
 
 #         return redirect(self.success_url)
-
-class ItemCreateView(LRM, View):
-    template_name = 'orders/item_create_form.html'
-    success_url = reverse_lazy('item_view')
-
-    def get(self, response):
-        priv = get_object_or_404(User_Type, user = response.user)
-        if priv == False:
-            return redirect('/logout/')
-        form = CreateItemForm()
-        ctx = {'form': form, 'privilege':priv}
-        return render(response, self.template_name, ctx)
-
-    def post(self, response):
-        priv = get_object_or_404(User_Type, user = response.user)
-        if priv == False:
-            return redirect('/logout/')
-
-        form = CreateItemForm(response.POST)
-        
-        if not form.is_valid():
-            ctx = {'form': form, 'privilege': priv}
-            return render(response, self.template_name, ctx)
-
-        form.save()
-
-        return redirect(self.success_url)
-
-class ItemListView(LRM, View):
-    model = Item
-    template_name = "orders/item_list_form.html"
-
-    def get(self, response):
-        priv = get_object_or_404(User_Type, user = response.user).privilege
-
-        if priv == False:
-            return redirect("/logout/")
-        
-        items = Item.objects.all()
-
-        ctx = {'privilege' : priv, 'item_list' : items}
-
-        return render(response, self.template_name, ctx)
 
 # class ShopUpdateView(LRM, View):
 #     template_name = 'orders/shopupdate_form.html'

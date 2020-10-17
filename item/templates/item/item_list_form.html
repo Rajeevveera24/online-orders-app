@@ -1,0 +1,21 @@
+{% extends 'orders/base.html' %}
+
+{% block title %}
+	View Items
+{% endblock %}
+
+{% block content %}
+    {% if privilege == True %}
+        {% if item_list %}
+            {% for it in item_list %}
+                <li>
+                    {{it.name}} | Unit: {{it.unit}} (<a href = "{% url 'item:item_update' it.id %}">Edit</a> | <a href = "{% url 'item:item_delete' it.id %}">Delete</a>)
+                </li>
+            {% endfor %}
+            <br>
+            <form method = "get" action = "/item/create/" class = "form-group">
+                <button type="submit", name="newItem", value="newItem", class = "btn btn-success">Add Item</button>
+            </form>
+        {% endif %}
+    {% endif %}
+{% endblock %}
