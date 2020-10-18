@@ -11,9 +11,9 @@
     {% if order_list %}
     	{% for ord in order_list %}
     		<li>
-    			<a href = "{% url 'orders:order_detail'  ord.id %}">order number: {{ ord.id }} | updated: {{ ord.updated_at }}
+    			<a href = "{% url 'orders:order_detail'  ord.id %}">order number: {{ ord.id }} | date: {{ ord.updated }}
     				{% if privilege %}
-    					| owned by: {{ ord.user }}
+    					| customer: {{ ord.user }}
     				{% endif %}
     			</a>
     		</li>

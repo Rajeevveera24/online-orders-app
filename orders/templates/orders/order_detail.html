@@ -7,6 +7,10 @@
 {% block content %}
 	{% if order %}
 		<h3>Order Number: {{ order.id }}</h3>
+		{% if privilege %}
+			<h6>Customer: {{order.user}}</h6>
+		{% endif %}
+		<h6>Date: {{order.updated}}</h6>
 		<br>
 	    <form action="#">
 			{% csrf_token %}
@@ -21,8 +25,12 @@
 							{{ it.qty }}
 					</div>
 				</div>
-			{% endfor %} 
+			{% endfor %}
+			<br>
 	    </form>
+		<form method = "get" action = "{% url 'orders:order_delete' order.id %}" class = "form-group">
+			<button type="submit", name = "delItem", value="delItem", class = "btn btn-success">Delete Order</button>
+		</form>
 	{% else %}
 		The requested order does not exist
 	{% endif %}

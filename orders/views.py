@@ -26,6 +26,9 @@ class OrderListView(LRM, View):
         else:
             orders = Order.objects.filter(user = response.user).order_by('-updated_at')
 
+        for ord in orders:
+            ord.updated = ord.updated_at.strftime("%d-%m-%Y @ %H:%M")
+
         ctx = {'privilege' : priv, 'order_list' : orders}
 
         return render(response, self.template_name, ctx)
@@ -37,6 +40,7 @@ class OrderDetailView(LRM, View):
         user_type = get_object_or_404(User_Type, user = response.user)
         priv = user_type.privilege
         order = Order.objects.get(id = pk)
+        order.updated = order.updated_at.strftime("%d-%m-%Y @ %H:%M")
         items = Order_Item.objects.filter(order = order)
         context = { 'order': order, 'privilege': priv, 'items':items}
         
@@ -83,6 +87,32 @@ class OrderCreateView(LRM, View):
         
         return redirect(self.success_url + str(order.id))
 
+class OrderDeleteView(LRM, View):
+    template_name = 'orders/order_delete.html'
+    success_url = "/view/"
+
+    def get(self, response, pk = None):
+        user_item = get_object_or_404(User_Type, user = response.user)
+        priv = user_item.privilege
+        order = get_object_or_404(Order, id = pk)
+
+        if priv == True or order.user == response.user:
+            return render(response, self.template_name, {'order':order, 'privilege': priv})
+        
+        return HttpResponse("You don't have permission to delete this order\nYou can go back to a previous page or contact the shop owners if you think this is an error")
+
+    def post(self, response, pk = None):
+        user_item = get_object_or_404(User_Type, user = response.user)
+        priv = user_item.privilege
+
+        order = get_object_or_404(Order, id = pk)
+
+        if priv == True or order.user == response.user:
+            order.delete()
+            return redirect(self.success_url)
+        
+        return HttpResponse("You don't have permission to delete this order\nYou can go back to a previous page or contact the shop owners if you think this is an error")
+        
 # class OrderUpdateView(LRM, View):
 #     template_name = 'orders/orderupdate_form.html'
 #     success_url = reverse_lazy('view')
