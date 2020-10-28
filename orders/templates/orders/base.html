@@ -100,12 +100,12 @@
 				<h4>{{ user.username }}</h4>
 				<hr>
 				{% if privilege %}
-					<a href = "/register">New User</a>
+					<a href = "/register">Users</a>
 					<a href = "/item/view/">Items</a>
 				{% else %}
 					<a href="/create">New Order</a>
 				{% endif %}
-				<a href="/view">View Orders</a>
+				<a href="/view">Orders</a>
 				<a href = "/logout">Logout</a>
 			{% else %}
 				<a href="/">Home</a>

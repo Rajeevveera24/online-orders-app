@@ -1,0 +1,15 @@
+{% extends 'orders/base.html' %}
+
+{% block title %}
+    Delete User
+{% endblock %}
+
+{% block content %}
+
+    <p>Are you sure you want to delete the user: {{ u.username }} with id {{ u.id }}?</p>
+    <p>Please note that all orders placed by this user will also be deleted from the database.<br> For financial purposes, we recommend you bill all of the orders placed by this user before deleting them</p>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input type="submit" value = "Yes, delete">
+    </form>
+{% endblock %}

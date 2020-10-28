@@ -1,0 +1,25 @@
+{% extends 'orders/base.html' %}
+
+{% block title %}
+	View Users
+{% endblock %}
+
+{% block content %}
+    <!-- {% for ord in user.todolist.all %}
+		<p><a href="/view/{{td.id}}">{{td.name}}</a></p>
+    {% endfor %} -->
+    {% if privilege %}
+        {% if user_list %}
+            {% for u in user_list %}
+                <li>
+                    <a href = "{% url 'register:user_update'  u.id %}">Customer id: {{ u.id }} | customer name: {{ u.username }}
+                    </a>
+                </li>
+            {% endfor %}
+        {% endif %}
+        <br/>
+        <form method = "get" action = "/register/new/" class = "form-group">
+            <button type="submit", name="newUser", value="newUser", class = "btn btn-success">Add Customer</button>
+        </form>
+    {% endif %}
+{% endblock %}

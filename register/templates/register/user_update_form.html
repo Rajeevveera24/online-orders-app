@@ -1,0 +1,16 @@
+{% extends 'orders/base.html' %}
+
+{% block title %}Update User Account{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <form method="POST" class="form-group">
+        {% csrf_token %}
+        {{ form | crispy }}
+        <button type="submit" class="btn btn-success">Save</button>
+    </form>
+    <br>
+    <form method = "get" action = "{% url 'register:user_delete' u.id %}" class = "form-group">
+        <button type="submit", name = "delItem", value="delItem", class = "btn btn-success">Delete User</button>
+    </form>
+{% endblock %}
