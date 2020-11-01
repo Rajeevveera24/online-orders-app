@@ -27,10 +27,12 @@
 				</div>
 			{% endfor %}
 			<br>
-	    </form>
-		<form method = "get" action = "{% url 'orders:order_delete' order.id %}" class = "form-group">
-			<button type="submit", name = "delItem", value="delItem", class = "btn btn-success">Delete Order</button>
 		</form>
+		{% if is_deleteable %}
+			<form method = "get" action = "{% url 'orders:order_delete' order.id %}" class = "form-group">
+				<button type="submit", name = "delItem", value="delItem", class = "btn btn-success">Delete Order</button>
+			</form>
+		{% endif %}
 	{% else %}
 		The requested order does not exist
 	{% endif %}

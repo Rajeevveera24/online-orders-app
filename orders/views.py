@@ -7,6 +7,7 @@ from django.urls import reverse_lazy, reverse
 from .models import Order, Order_Item, Shop, User_Type
 from item.models import Item
 from .forms import CreateShopForm
+import datetime as dt
 
 def home(response):
     priv = False
@@ -42,31 +43,57 @@ class OrderDetailView(LRM, View):
         order = Order.objects.get(id = pk)
         order.updated = order.updated_at.strftime("%d-%m-%Y @ %H:%M")
         items = Order_Item.objects.filter(order = order)
-        context = { 'order': order, 'privilege': priv, 'items':items}
+        context = {'order': order, 'privilege': priv, 'items':items, 'is_deleteable': False}
         
+        cur_time = dt.datetime.now()
+        cur_hour = int(cur_time.strftime("%H"))
+
+        if cur_hour < 6 or cur_hour >= 18:
+            created_time = order.created_at
+            diff = cur_time - created_time
+            if diff.seconds <= 43200: #users can delete orders upto 12 hours after placing them...
+                context['is_deleteable'] = True
+
         return render(response, self.template_name, context)
 
 class OrderCreateView(LRM, View):
     template_name = 'orders/order_create.html'
+    wrong_time_page = 'orders/wrong_time.html'
     success_url = "/view/order/"
 
     def get(self, response):
+        
         ctx = dict()
+        ctx["privilege"] = get_object_or_404(User_Type, user = response.user).privilege
+        
+        cur_time = dt.datetime.now()
+        cur_hour = int(cur_time.strftime("%H"))
+        
+        if cur_hour >= 6 and cur_hour < 18:    
+            ctx["message"] = "Order can only be placed between 6:00 pm to 6:00 am the next day"
+            return render(response, self.wrong_time_page, ctx)
+
         items = Item.objects.all()
         ctx["items"] = items
-        ctx["privilege"] = get_object_or_404(User_Type, user = response.user).privilege
         
         return render(response, self.template_name, ctx)
 
     def post(self, response):
-        # print(response.POST)
-        # print(type(response.POST))
+
+        cur_time = dt.datetime.now()
+        cur_hour = int(cur_time.strftime("%H"))
+
+        if cur_hour >= 6 and cur_hour < 18:    
+            ctx = dict()
+            ctx["privilege"] = get_object_or_404(User_Type, user = response.user).privilege
+            ctx["message"] = "Order can only be placed between 6:00 pm to 6:00 am the next day"
+            return render(response, self.wrong_time_page, ctx)
+
+
         items = Item.objects.all()
         order = Order(user = response.user)
         products = {}
         form_input = response.POST
-
-        # print(form_input)
 
         for it in items:
             if int(form_input.get(str(it))) > 0:
@@ -89,6 +116,7 @@ class OrderCreateView(LRM, View):
 
 class OrderDeleteView(LRM, View):
     template_name = 'orders/order_delete.html'
+    wrong_time_page = 'orders/wrong_time.html'
     success_url = "/view/"
 
     def get(self, response, pk = None):
@@ -96,21 +124,70 @@ class OrderDeleteView(LRM, View):
         priv = user_item.privilege
         order = get_object_or_404(Order, id = pk)
 
-        if priv == True or order.user == response.user:
-            return render(response, self.template_name, {'order':order, 'privilege': priv})
+        if priv == True:    #the admin can delete any order at any time
+            return render(response, self.template_name, {'order':order, 'privilege': priv})         
+        else:
+            if order.user == response.user: #extra check to make sure that current user owns the order
+                cur_time = dt.datetime.now()
+                cur_hour = int(cur_time.strftime("%H"))
+                
+                if cur_hour >= 6 and cur_hour < 18:    
+                    ctx = dict()
+                    ctx["privilege"] = False
+                    ctx["message"] = "Order can only be deleted between 6:00 pm to 6:00 am the next day"
+                    return render(response, self.wrong_time_page, ctx)
+                else:
+                    created_time = order.created_at
+                    diff = cur_time - created_time
+                    if diff.seconds <= 43200: #users can delete orders upto 12 hours after placing them...
+                        return render(response, self.template_name, {'order':order, 'privilege': priv})
+                    else:
+                        ctx = dict()
+                        ctx["privilege"] = False
+                        ctx["message"] = "Order cannot be deleted 12+ hours after it has been placed"
+                        return render(response, self.wrong_time_page, ctx)
+            else:
+                return HttpResponse("You don't have permission to delete this order\nYou can go back to a previous page or contact the shop owners if you think this is an error")
         
-        return HttpResponse("You don't have permission to delete this order\nYou can go back to a previous page or contact the shop owners if you think this is an error")
+        # if cur_hour >= 6 and cur_hour < 18:    
+        #     ctx["message"] = "Order can only be placed between 6:00 pm to 6:00 am the next day"
+        #     return render(response, self.wrong_time_page, ctx)
+
+        # if priv == True or order.user == response.user:
+        #     return render(response, self.template_name, {'order':order, 'privilege': priv})
 
     def post(self, response, pk = None):
         user_item = get_object_or_404(User_Type, user = response.user)
         priv = user_item.privilege
-
         order = get_object_or_404(Order, id = pk)
 
-        if priv == True or order.user == response.user:
+        if priv == True:    #admin can delete any order at any time
             order.delete()
             return redirect(self.success_url)
-        
+        else:
+            if order.user == response.user: #extra check to make sure that current user owns the order
+                cur_time = dt.datetime.now()
+                cur_hour = int(cur_time.strftime("%H"))
+                
+                if cur_hour >= 6 and cur_hour < 18:    
+                    ctx = dict()
+                    ctx["privilege"] = False
+                    ctx["message"] = "Order can only be deleted between 6:00 pm to 6:00 am the next day"
+                    return render(response, self.wrong_time_page, ctx)
+                else:
+                    created_time = order.created_at
+                    diff = cur_time - created_time
+                    if diff.seconds <= 43200: #users can delete orders upto 12 hours after placing them...
+                        order.delete()
+                        return redirect(self.success_url)
+                    else:
+                        ctx = dict()
+                        ctx["privilege"] = False
+                        ctx["message"] = "Order cannot be deleted 12+ hours after it has been placed"
+                        return render(response, self.wrong_time_page, ctx)
+            else:
+                return HttpResponse("You don't have permission to delete this order\nYou can go back to a previous page or contact the shop owners if you think this is an error")
+
         return HttpResponse("You don't have permission to delete this order\nYou can go back to a previous page or contact the shop owners if you think this is an error")
         
 # class OrderUpdateView(LRM, View):
