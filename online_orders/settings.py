@@ -143,7 +143,7 @@ USE_TZ = False
 # STATIC_URL = '/static/'
 
 LOGOUT_REDIRECT_URL = '/login'
-LOGIN_REDIRECT_URL = '/home'
+LOGIN_REDIRECT_URL = '/view'
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 

@@ -10,10 +10,11 @@ from .forms import CreateShopForm
 import datetime as dt
 
 def home(response):
-    priv = False
-    if response.user.is_authenticated:
-        priv = get_object_or_404(User_Type, user = response.user).privilege
-    return render(response, "orders/home.html", {'privilege': priv})
+    # priv = False
+    # if response.user.is_authenticated:
+    #     priv = get_object_or_404(User_Type, user = response.user).privilege
+    # return render(response, "orders/home.html", {'privilege': priv})
+    return redirect("/login")
 
 class OrderListView(LRM, View):
     model = Order
