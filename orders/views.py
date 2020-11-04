@@ -51,8 +51,8 @@ class OrderDetailView(LRM, View):
 
         if cur_hour < 6 or cur_hour >= 18:
             created_time = order.created_at
-            diff = cur_time - created_time
-            if diff.seconds <= 43200 or priv == True: #users can delete orders upto 12 hours after placing them...
+            diff = cur_time - created_time 
+            if diff.days == 0 and diff.seconds <= 43200 or priv == True: #users can delete orders upto 12 hours after placing them...
                 context['is_deleteable'] = True
 
         return render(response, self.template_name, context)
@@ -140,7 +140,7 @@ class OrderDeleteView(LRM, View):
                 else:
                     created_time = order.created_at
                     diff = cur_time - created_time
-                    if diff.seconds <= 43200: #users can delete orders upto 12 hours after placing them...
+                    if diff.days == 0 and diff.seconds <= 43200: #users can delete orders upto 12 hours after placing them...
                         return render(response, self.template_name, {'order':order, 'privilege': priv})
                     else:
                         ctx = dict()
@@ -178,7 +178,7 @@ class OrderDeleteView(LRM, View):
                 else:
                     created_time = order.created_at
                     diff = cur_time - created_time
-                    if diff.seconds <= 43200: #users can delete orders upto 12 hours after placing them...
+                    if diff.days == 0 and diff.seconds <= 43200: #users can delete orders upto 12 hours after placing them...
                         order.delete()
                         return redirect(self.success_url)
                     else:

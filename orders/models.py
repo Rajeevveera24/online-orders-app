@@ -33,3 +33,8 @@ class Order_Item(models.Model):
 
 	def __str__(self):
 		return str(self.id)
+
+class Test_Model(models.Model):
+	name = models.CharField(max_length = 100)
+	def __str__(self):
+		return str(self.id)
