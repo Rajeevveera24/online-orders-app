@@ -20,6 +20,7 @@ import dotenv
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 dotenv_file = os.path.join(BASE_DIR, ".env")
+
 if os.path.isfile(dotenv_file):
     dotenv.load_dotenv(dotenv_file)
 
@@ -30,7 +31,7 @@ if os.path.isfile(dotenv_file):
 SECRET_KEY = 'ecr@cyth9bp4qr!gk^w+!x+xr*b(8@jdt@dr+1x(5(0%0pss!)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1', 'online-orders-app.herokuapp.com', 'arunpoultry.herokuapp.com']
 
@@ -91,18 +92,6 @@ DATABASES = {
         'NAME': BASE_DIR + '/' + 'db.sqlite3',
     }
 }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'arun_db',
-#         'USER': 'arun_user',
-#         'PASSWORD': 'arun#1234',
-#         'HOST': 'localhost',
-#         'PORT': '',
-#     }
-# }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
