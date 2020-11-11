@@ -7,11 +7,28 @@
 {% block content %}
     {% if privilege == True %}
         {% if item_list %}
-            {% for it in item_list %}
-                <li>
-                    {{it.name}} | Unit: {{it.unit}} (<a href = "{% url 'item:item_update' it.id %}">Edit</a> | <a href = "{% url 'item:item_delete' it.id %}">Delete</a>)
-                </li>
-            {% endfor %}
+            <table class = "table table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Item Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Unit</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Edit | Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for it in item_list %}
+                        <tr>
+                            <th scope="row"> {{ it.id }} </th>
+                            <td> {{ it.name }} </td>
+                            <td> {{ it.unit }} </td>
+                            <td> {{ it.desc }} </td>
+                            <td><a href = "{% url 'item:item_update' it.id %}">Edit</a> | <a href = "{% url 'item:item_delete' it.id %}">Delete</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         {% endif %}
         <br>
         <form method = "get" action = "/item/create/" class = "form-group">
