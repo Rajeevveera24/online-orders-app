@@ -1,4 +1,4 @@
-{% extends 'orders/base1.html' %}
+{% extends 'orders/base2.html' %}
 
 {% block title %}
     Login Here
@@ -7,9 +7,25 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <form method="post" class="from-group">
-        {% csrf_token %}
-        {{form|crispy}}
-        <button type="submit" class="btn btn-success">Login</button>	
-    </form>
+
+	<br>
+
+	<h2 style = "text-align: center;">Login Form</h2>
+
+	<form method="post">
+		<div class="imgcontainer">
+			<img src = "/register/registration/favicon.ico" alt="Avatar" class="avatar">
+		</div>
+
+		<div class="container">
+			{% csrf_token %}
+			{{form|crispy}}
+			<!-- <button type="submit" class="btn btn-success">Login</button>	 -->
+			<button type="submit">Login</button>
+		</div>
+		<div class="container" style="background-color:#ffffff">
+			<button type = "reset" class="cancelbtn">Clear</button>
+			<span class="psw">Forgot <a href="#">password?</a></span>
+		</div>
+	</form>
 {% endblock %}
