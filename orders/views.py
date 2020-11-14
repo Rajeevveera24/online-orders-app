@@ -54,6 +54,9 @@ class OrderDetailView(LRM, View):
             diff = cur_time - created_time 
             if diff.days == 0 and diff.seconds <= 43200 or priv == True: #users can delete orders upto 12 hours after placing them...
                 context['is_deleteable'] = True
+        else:
+            if priv == True:
+                context['is_deleteable'] = True
 
         return render(response, self.template_name, context)
 
