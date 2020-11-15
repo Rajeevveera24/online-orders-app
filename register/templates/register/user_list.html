@@ -10,12 +10,24 @@
     {% endfor %} -->
     {% if privilege %}
         {% if user_list %}
-            {% for u in user_list %}
-                <li>
-                    <a href = "{% url 'register:user_update'  u.id %}">Customer id: {{ u.id }} | customer name: {{ u.username }}
-                    </a>
-                </li>
-            {% endfor %}
+            <table class = "table table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Customer Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Update User</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for u in user_list %}
+                        <tr>
+                            <th scope="row"> {{ u.id }} </th>
+                            <td> {{ u.username }} </td>
+                            <td><a href = "{% url 'register:user_update'  u.id %}">Update</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         {% endif %}
         <br/>
         <form method = "get" action = "/register/new/" class = "form-group">
