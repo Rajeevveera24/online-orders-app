@@ -5,19 +5,29 @@
 {% endblock %}
 
 {% block content %}
-    <!-- {% for ord in user.todolist.all %}
-		<p><a href="/view/{{td.id}}">{{td.name}}</a></p>
-    {% endfor %} -->
-    {% if order_list %}
-    	{% for ord in order_list %}
-    		<li>
-    			<a href = "{% url 'orders:order_detail'  ord.id %}">order number: {{ ord.id }} | date: {{ ord.updated }}
-    				{% if privilege %}
-    					| customer: {{ ord.user }}
-    				{% endif %}
-    			</a>
-    		</li>
-		{% endfor %}
+	{% if order_list %}
+		<table class = "table table-bordered table-hover">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col">Date</th>
+					<th scope="col">Order Id</th>
+					{% if privilege %}
+						<th scope = "col">Customer Name</th>
+					{% endif %}
+				</tr>
+			</thead>
+			<tbody>
+				{% for ord in order_list %}
+					<tr>
+						<th scope="row"> {{ ord.updated }} </th>
+						<td><a href = "{% url 'orders:order_detail'  ord.id %}"> {{ ord.id }} </a></td>
+						{% if privilege %}
+							<td> {{ ord.user }} </td>
+						{% endif %}
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
 	{% else %}
 			<p>There are no orders to view</p>
     {% endif %}
