@@ -94,7 +94,7 @@ class OrderCreateView(LRM, View):
             return render(response, self.wrong_time_page, ctx)
 
 
-        items = Item.objects.all()
+        items = Item.objects.all().order_by('id')
         order = Order(user = response.user)
         products = {}
         form_input = response.POST
