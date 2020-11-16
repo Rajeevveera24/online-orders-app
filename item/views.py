@@ -45,7 +45,7 @@ class ItemListView(LRM, ListView):
         if priv == False:
             return redirect("/logout/")
         
-        items = Item.objects.all()
+        items = Item.objects.all().order_by('id')
 
         ctx = {'privilege' : priv, 'item_list' : items}
 
