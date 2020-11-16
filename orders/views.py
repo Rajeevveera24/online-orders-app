@@ -77,7 +77,7 @@ class OrderCreateView(LRM, View):
             ctx["message"] = "Order can only be placed between 6:00 pm to 6:00 am the next day"
             return render(response, self.wrong_time_page, ctx)
 
-        items = Item.objects.all()
+        items = Item.objects.all().order_by('id')
         ctx["items"] = items
         
         return render(response, self.template_name, ctx)
