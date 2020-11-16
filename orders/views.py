@@ -152,13 +152,6 @@ class OrderDeleteView(LRM, View):
                         return render(response, self.wrong_time_page, ctx)
             else:
                 return HttpResponse("You don't have permission to delete this order\nYou can go back to a previous page or contact the shop owners if you think this is an error")
-        
-        # if cur_hour >= 6 and cur_hour < 18:    
-        #     ctx["message"] = "Order can only be placed between 6:00 pm to 6:00 am the next day"
-        #     return render(response, self.wrong_time_page, ctx)
-
-        # if priv == True or order.user == response.user:
-        #     return render(response, self.template_name, {'order':order, 'privilege': priv})
 
     def post(self, response, pk = None):
         user_item = get_object_or_404(User_Type, user = response.user)
