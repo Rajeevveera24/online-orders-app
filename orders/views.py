@@ -43,7 +43,7 @@ class OrderDetailView(LRM, View):
         priv = user_type.privilege
         order = Order.objects.get(id = pk)
         order.updated = order.updated_at.strftime("%d-%m-%Y @ %H:%M")
-        items = Order_Item.objects.filter(order = order)
+        items = Order_Item.objects.filter(order = order).order_by('id')
         context = {'order': order, 'privilege': priv, 'items':items, 'is_deleteable': False}
         
         cur_time = dt.datetime.now()
