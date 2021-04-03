@@ -11,6 +11,7 @@
 			<h6>Customer: {{order.user}}</h6>
 		{% endif %}
 		<h6>Date: {{order.updated}}</h6>
+		<h6>Cost: {{order.cost}}</h6>
 		<br>
 	    <form action="#">
 			{% csrf_token %}

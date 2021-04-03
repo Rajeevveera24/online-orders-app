@@ -15,6 +15,11 @@
                         {{ it.name }} ({{ it.unit }})
                     </div>
                 </div>
+                <div class = "input-group-prepend">
+                    <div class = "input-group-text">
+                        Rs. {{ it.price }}
+                    </div>
+                </div>
                 <input type = "number" value = "0" min = 0 name = {{it.name}} class = "form-control">
             </div>
         {% endfor %}

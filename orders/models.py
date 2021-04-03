@@ -20,6 +20,9 @@ class Shop(models.Model):
 class Order(models.Model):
 	user = models.ForeignKey(User, on_delete = models.CASCADE, related_name = "user_order", null = False)
 	items = models.ManyToManyField(Item, through = "Order_Item", related_name = "ord_item")
+	cost = models.FloatField(default = 0, null = False)
+	paid = models.BooleanField(default = False, null = False)
+	delivered = models.BooleanField(default = False, null = False)
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 

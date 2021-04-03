@@ -38,6 +38,7 @@ class OrderListView(LRM, View):
 class OrderDetailView(LRM, View):
     model = Order
     template_name = "orders/order_detail.html"
+    
     def get(self, response, pk):
         user_type = get_object_or_404(User_Type, user = response.user)
         priv = user_type.privilege
@@ -98,15 +99,18 @@ class OrderCreateView(LRM, View):
         order = Order(user = response.user)
         products = {}
         form_input = response.POST
+        cost = 0
 
         for it in items:
             if int(form_input.get(str(it))) > 0:
                 products[it] = int(form_input.get(str(it)))
+                cost += products[it] * it.price
         
         if products == {}:
             return redirect("/create/")
         
         try:
+            order.cost = cost
             order.save()
             for p,q in products.items():
                 order_item = Order_Item(order = order, item = p, qty = int(q))
