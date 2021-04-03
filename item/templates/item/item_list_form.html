@@ -13,6 +13,7 @@
                         <th scope="col">Item Id</th>
                         <th scope="col">Name</th>
                         <th scope="col">Unit</th>
+                        <th scope="col">Price(Rs/Unit)</th>
                         <th scope="col">Description</th>
                         <th scope="col">Edit | Delete</th>
                     </tr>
@@ -23,6 +24,7 @@
                             <th scope="row"> {{ it.id }} </th>
                             <td> {{ it.name }} </td>
                             <td> {{ it.unit }} </td>
+                            <td> {{ it.price }}</td>
                             <td> {{ it.desc }} </td>
                             <td><a href = "{% url 'item:item_update' it.id %}">Edit</a> | <a href = "{% url 'item:item_delete' it.id %}">Delete</a></td>
                         </tr>
