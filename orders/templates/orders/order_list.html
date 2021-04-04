@@ -11,6 +11,8 @@
 				<tr>
 					<th scope="col">Date</th>
 					<th scope="col">Order Id</th>
+					<th scope="col">Amount</th>
+					<th scope="col">Status</th>
 					{% if privilege %}
 						<th scope = "col">Customer Name</th>
 					{% endif %}
@@ -21,6 +23,20 @@
 					<tr>
 						<th scope="row"> {{ ord.updated }} </th>
 						<td><a href = "{% url 'orders:order_detail'  ord.id %}"> {{ ord.id }} </a></td>
+						<td>{{ ord.cost }}</td>
+							{% if ord.delivered %}
+								<td style="background-color:#00FF00">
+									Delivered
+								</td>
+							{% elif ord.paid %}
+								<td style="background-color:#74d3ff">
+									Delivery Due
+								</td>
+							{% else %}
+								<td style="background-color:#FF0000">
+									Payment Due
+								</td>
+							{% endif %}
 						{% if privilege %}
 							<td> {{ ord.user }} </td>
 						{% endif %}
