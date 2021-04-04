@@ -191,30 +191,22 @@ class OrderDeleteView(LRM, View):
 
         return HttpResponse("You don't have permission to delete this order\nYou can go back to a previous page or contact the shop owners if you think this is an error")
         
-# class OrderUpdateView(LRM, View):
-#     template_name = 'orders/orderupdate_form.html'
-#     success_url = reverse_lazy('view')
+class OrderSetPaymentView(LRM, View):
+    success_url = '/view'
 
-#     def get(self, response):
-#         order = get_object_or_404(Order, user = response.user)
-#         form = CreateOrderForm(instance = order)
-#         ctx = {'form': form}
-#         user_type = get_object_or_404(User_Type, user = response.user)
-#         # ctx = dict()
-#         ctx['privilege'] = user_type.privilege
-#         return render(response, self.template_name, ctx)
+    def get(self, response, pk = None):
+        user_item = get_object_or_404(User_Type, user = response.user)
+        priv = user_item.privilege
+        order = get_object_or_404(Order, id = pk)
 
-#     def post(self, response):
-#         order = get_object_or_404(Order, user = response.user)
-#         form = CreateOrderForm(response.POST, instance = order)
+        if priv == False: #This scenario might arise if a non-admin user lands on the url by mistake. I am simply redirecting them to home page 
+            return redirect(self.success_url)
+        else:
+            order.paid = True
+            order.save()
+            return redirect(self.success_url)
 
-#         if not form.is_valid():
-#             ctx = {'form': form}
-#             return render(response, self.template_name, ctx)
-        
-#         order.save()
-
-#         return redirect(self.success_url)
+        return HttpResponse("You don't have permission to update this order\nYou can go back to a previous page or contact the shop owners if you think this is an error")
 
 # class ShopUpdateView(LRM, View):
 #     template_name = 'orders/shopupdate_form.html'

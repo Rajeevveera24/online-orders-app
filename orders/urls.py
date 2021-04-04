@@ -11,6 +11,6 @@ urlpatterns = [
     path("view/", views.OrderListView.as_view(), name = "view"),
     path("view/order/<int:pk>", views.OrderDetailView.as_view(), name = "order_detail"),
     path("delete/<int:pk>", views.OrderDeleteView.as_view(), name = "order_delete"),
-    # path("update/order/<int:pk>", views.OrderUpdateView.as_view(), name = "order_update"),
+    path("update/<int:pk>", views.OrderSetPaymentView.as_view(), name = "order_update_pay"),
     # path("details/", views.ShopUpdateView.as_view(success_url = reverse_lazy('home')), name = "shop"),
 ]

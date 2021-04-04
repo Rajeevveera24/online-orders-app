@@ -12,18 +12,44 @@
 					<th scope="col">Date</th>
 					<th scope="col">Order Id</th>
 					<th scope="col">Amount</th>
-					<th scope="col">Status</th>
 					{% if privilege %}
 						<th scope = "col">Customer Name</th>
+						<th scope="col">Payment</th>
+						<th scope="col">Delivery</th>
+					{% else %}
+						<th scope="col">Status</th>
 					{% endif %}
 				</tr>
 			</thead>
 			<tbody>
 				{% for ord in order_list %}
-					<tr>
+					<tr align="center" valign="middle">
 						<th scope="row"> {{ ord.updated }} </th>
 						<td><a href = "{% url 'orders:order_detail'  ord.id %}"> {{ ord.id }} </a></td>
-						<td>{{ ord.cost }}</td>
+						<td>{{ ord.cost }}</td>						
+						{% if privilege %}
+							<td> {{ ord.user }} </td>
+						{% endif %}
+						{% if privilege %}
+							{% if ord.paid %}
+								<td style="background-color: #00FF00;">
+									<button type="submit">Set Not Paid</button>
+								</td>
+							{% else %}
+								<td style="background-color: #FF0000;">
+									<button type="submit", name="some", onclick="location.href='{% url 'orders:order_update_pay' ord.id %}'">Set as Paid</button>
+								</td>
+							{% endif %}
+							{% if ord.delivered %}
+								<td style="background-color:#74d3ff">
+									<button type="submit">Set Not Delivered</button>
+								</td>
+							{% else %}
+								<td style="background-color:#FF0000">
+									<button type="submit">Set as Delivered</button>
+								</td>
+							{% endif %}
+						{% else %}
 							{% if ord.delivered %}
 								<td style="background-color:#00FF00">
 									Delivered
@@ -37,8 +63,6 @@
 									Payment Due
 								</td>
 							{% endif %}
-						{% if privilege %}
-							<td> {{ ord.user }} </td>
 						{% endif %}
 					</tr>
 				{% endfor %}
