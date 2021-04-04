@@ -191,7 +191,7 @@ class OrderDeleteView(LRM, View):
 
         return HttpResponse("You don't have permission to delete this order\nYou can go back to a previous page or contact the shop owners if you think this is an error")
         
-class OrderSetPaymentView(LRM, View):
+class OrderUpdatePaymentView(LRM, View):
     success_url = '/view'
 
     def get(self, response, pk = None):
@@ -199,14 +199,32 @@ class OrderSetPaymentView(LRM, View):
         priv = user_item.privilege
         order = get_object_or_404(Order, id = pk)
 
-        if priv == False: #This scenario might arise if a non-admin user lands on the url by mistake. I am simply redirecting them to home page 
+        if priv == False: #This scenario might arise if a non-admin user lands on the url by mistake. I am simply redirecting them to the /views/ page 
             return redirect(self.success_url)
         else:
-            order.paid = True
+            order.paid = not(order.paid)
             order.save()
             return redirect(self.success_url)
 
         return HttpResponse("You don't have permission to update this order\nYou can go back to a previous page or contact the shop owners if you think this is an error")
+
+class OrderUpdateDeliveryView(LRM, View):
+    success_url = '/view/'
+
+    def get(self, response, pk = None):
+        user_item = get_object_or_404(User_Type, user = response.user)
+        priv = user_item.privilege
+        order = get_object_or_404(Order, id = pk)
+
+        if priv == False: #This scenario might arise if a non-admin user lands on the url by mistake. I am simply redirecting them to the /views/ page 
+            return redirect(self.success_url)
+        else:
+            order.delivered = not(order.delivered)
+            order.save()
+            return redirect(self.success_url)
+
+        return HttpResponse("You don't have permission to update this order\nYou can go back to a previous page or contact the shop owners if you think this is an error")
+
 
 # class ShopUpdateView(LRM, View):
 #     template_name = 'orders/shopupdate_form.html'

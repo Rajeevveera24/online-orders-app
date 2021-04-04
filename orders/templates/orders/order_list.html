@@ -33,20 +33,20 @@
 						{% if privilege %}
 							{% if ord.paid %}
 								<td style="background-color: #00FF00;">
-									<button type="submit">Set Not Paid</button>
+									<button type="submit", onclick="location.href='{% url 'orders:order_update_pay' ord.id %}'">Set Not Paid</button>
 								</td>
 							{% else %}
 								<td style="background-color: #FF0000;">
-									<button type="submit", name="some", onclick="location.href='{% url 'orders:order_update_pay' ord.id %}'">Set as Paid</button>
+									<button type="submit", onclick="location.href='{% url 'orders:order_update_pay' ord.id %}'">Set as Paid</button>
 								</td>
 							{% endif %}
 							{% if ord.delivered %}
-								<td style="background-color:#74d3ff">
-									<button type="submit">Set Not Delivered</button>
+								<td style="background-color:#00FF00">
+									<button type="submit", onclick="location.href='{% url 'orders:order_update_delivery' ord.id %}'">Set Not Delivered</button>
 								</td>
 							{% else %}
 								<td style="background-color:#FF0000">
-									<button type="submit">Set as Delivered</button>
+									<button type="submit", onclick="location.href='{% url 'orders:order_update_delivery' ord.id %}'">Set as Delivered</button>
 								</td>
 							{% endif %}
 						{% else %}
