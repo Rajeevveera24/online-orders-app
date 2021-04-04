@@ -9,23 +9,22 @@
 {% block content %}
 
 	<br>
+	<div class = "login">
+		<form method="post">
+			<div class="imgcontainer">
+				<img src = "/static/favicon.ico" alt="Avatar" class="avatar">
+			</div>
 
-	<h2 style = "text-align: center;">Login Form</h2>
-
-	<form method="post">
-		<div class="imgcontainer">
-			<img src = "/static/favicon.ico" alt="Avatar" class="avatar">
-		</div>
-
-		<div class="container">
-			{% csrf_token %}
-			{{form|crispy}}
-			<!-- <button type="submit" class="btn btn-success">Login</button>	 -->
-			<button type="submit">Login</button>
-		</div>
-		<div class="container" style="background-color:#ffffff">
-			<button type = "reset" class="cancelbtn">Clear</button>
-			<span class="psw">Forgot <a href="#">password?</a></span>
-		</div>
-	</form>
+			<div class="container">
+				{% csrf_token %}
+				{{form|crispy}}
+				<!-- <button type="submit" class="btn btn-success">Login</button>	 -->
+				<button type="submit">Login</button>
+			</div>
+			<div class="container" style="background-color:#ffffff">
+				<button type = "reset" class="cancelbtn" float="left">Clear</button>
+				<span class="psw">Forgot <a href="#" onclick="window.alert('Contact +91 9878217910 for further assistance with your account')">password?</a></span>
+			</div>
+		</form>
+	</div>
 {% endblock %}
