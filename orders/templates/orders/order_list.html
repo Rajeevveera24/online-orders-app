@@ -9,13 +9,15 @@
 		<table class = "table table-bordered table-hover">
 			<thead class="thead-dark">
 				<tr>
-					<th scope="col">Date</th>
+					<th scope="col">Date Created</th>
+					<th scope="col">Date Updated</th>
 					<th scope="col">Order Id</th>
 					<th scope="col">Amount</th>
 					{% if privilege %}
-						<th scope = "col">Customer Name</th>
+						<th scope = "col">Customer</th>
 						<th scope="col">Payment</th>
 						<th scope="col">Delivery</th>
+						<th scope="col">Delete</th>
 					{% else %}
 						<th scope="col">Status</th>
 					{% endif %}
@@ -24,6 +26,7 @@
 			<tbody>
 				{% for ord in order_list %}
 					<tr align="center" valign="middle">
+						<th scope="row"> {{ ord.created }} </th>
 						<th scope="row"> {{ ord.updated }} </th>
 						<td><a href = "{% url 'orders:order_detail'  ord.id %}"> {{ ord.id }} </a></td>
 						<td>{{ ord.cost }}</td>						
@@ -32,23 +35,30 @@
 						{% endif %}
 						{% if privilege %}
 							{% if ord.paid %}
-								<td style="background-color: #00FF00;">
-									<button type="submit", onclick="location.href='{% url 'orders:order_update_pay' ord.id %}'">Set Not Paid</button>
+								<td>
+									<button class = "btn btn-success", type="submit", onclick="location.href='{% url 'orders:order_update_pay' ord.id %}'">Set Not Paid</button>
 								</td>
 							{% else %}
-								<td style="background-color: #FF0000;">
-									<button type="submit", onclick="location.href='{% url 'orders:order_update_pay' ord.id %}'">Set as Paid</button>
+								<td>
+									<button class = "btn btn-success", style="background-color: #FF00F0; color: black;", type="submit",  background-color="#FF0000", onclick="location.href='{% url 'orders:order_update_pay' ord.id %}'">Set as Paid</button>
 								</td>
 							{% endif %}
 							{% if ord.delivered %}
-								<td style="background-color:#00FF00">
-									<button type="submit", onclick="location.href='{% url 'orders:order_update_delivery' ord.id %}'">Set Not Delivered</button>
+								<td>
+									<button class = "btn btn-success" type="submit", onclick="location.href='{% url 'orders:order_update_delivery' ord.id %}'">Set Not Delivered</button>
 								</td>
 							{% else %}
-								<td style="background-color:#FF0000">
-									<button type="submit", onclick="location.href='{% url 'orders:order_update_delivery' ord.id %}'">Set as Delivered</button>
+								<td>
+									<button class = "btn btn-success", style="background-color: #FF00F0; color: black;" type="submit",  background-color="#FF0000", onclick="location.href='{% url 'orders:order_update_delivery' ord.id %}'">Set as Delivered</button>
 								</td>
 							{% endif %}
+							<td style="vertical-align: middle;">
+								{% if ord.paid and ord.delivered %}
+									<a href="{% url 'orders:order_delete' ord.id %}">
+										<i class="glyphicon glyphicon-trash"></i>
+									</a>	
+								{% endif %}
+							</td>
 						{% else %}
 							{% if ord.delivered %}
 								<td style="background-color:#00FF00">
