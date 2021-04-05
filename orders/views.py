@@ -24,12 +24,13 @@ class OrderListView(LRM, View):
         user_type = get_object_or_404(User_Type, user = response.user)
         priv = user_type.privilege
         if priv == True:
-            orders = Order.objects.all().order_by('-updated_at')
+            orders = Order.objects.all().order_by('-id')
         else:
-            orders = Order.objects.filter(user = response.user).order_by('-updated_at')
+            orders = Order.objects.filter(user = response.user).order_by('-id')
 
         for ord in orders:
-            ord.updated = ord.updated_at.strftime("%d-%m-%Y @ %H:%M")
+            ord.updated = ord.updated_at.strftime("%d-%m-%Y @ %I:%M %p")
+            ord.created = ord.created_at.strftime("%d-%m-%Y @ %I:%M %p")
 
         ctx = {'privilege' : priv, 'order_list' : orders}
 
