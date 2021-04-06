@@ -6,14 +6,6 @@
 		.body{
 			overflow:auto;
 		}
-        .main{
-			margin-left: 5%;
-			padding: 0px 10px;
-			margin-right: 0%;
-			margin-bottom: 5%;
-		}
-    </style>
-	<style type = "text/css">
 		* {
             box-sizing: border-box;
             padding: 0;
@@ -80,6 +72,20 @@
             align-self: center;
         }
 
+        .table {
+            display: block;
+            overflow-x: auto;
+        }
+        .main{
+                margin-left: 0%;
+                padding: 0px 10px;
+                margin-right: 0%;
+                margin-bottom: 5%;
+    /*			align-items: center;
+                align-self: center; 
+                align-content: center;
+                justify-content: center;*/
+            }
         @media screen and (min-width: 768px) {
             .main{
                 margin-left: 10%;
@@ -87,7 +93,7 @@
                 margin-right: 10%;
                 margin-bottom: 5%;
     /*			align-items: center;
-                align-self: center;
+                align-self: center; 
                 align-content: center;
                 justify-content: center;*/
             }
@@ -98,7 +104,17 @@
                 height: 70px;
                 align-items: center;
             }
-            
+            .sidenav {
+                height:100%;
+                width: 20%;
+                position: fixed;
+                z-index:1;
+                top:0;
+                left:0;
+                background-color:#111;
+                overflow-x:hidden;
+                padding-top:20px;
+		    }
             .main-nav {
                 display: flex;
                 margin-right: 30px;
@@ -125,6 +141,9 @@
             .logo:hover,
             .nav-links:hover {
                 color: rgba(255, 255, 255, 1);
+            }
+            .table {
+                display: inline;
             }
         }
 	</style>
@@ -183,7 +202,7 @@
         </nav>
     </div>
  
-	<div id="content" name="content" class="main">
+	<div id="content" name="content" class="main" style="align-self: center;">
 		<!-- <div class="row justify-content-center"> -->
 			<!-- <div class="col-8"> -->
 				<h1 class="mt-2">Arun Poultry</h1>
