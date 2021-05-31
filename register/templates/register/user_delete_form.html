@@ -6,10 +6,13 @@
 
 {% block content %}
 
-    <p>Are you sure you want to delete the user: {{ u.username }} with id {{ u.id }}?</p>
-    <p>Please note that all orders placed by this user will also be deleted from the database.<br> For financial purposes, we recommend you bill all of the orders placed by this user before deleting them</p>
+    <p>Are you sure you want to delete the user: {{ u.username }} with id {{ u.id }} ?</p>
+    <p>Please note that all orders placed by this user will also be deleted from the database.<br> For financial purposes, bill all of the orders placed by this user before deleting them.</p>
     <form action="" method="POST">
         {% csrf_token %}
         <input type="submit" value = "Yes, delete">
+        <br/>
+        <br/>
+        <input type="submit" value="No, don't delete" onclick= " window.location.href = '{% url 'register:user_view' %}'; return false;">
     </form>
 {% endblock %}

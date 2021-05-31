@@ -11,5 +11,8 @@
     <form action="" method="POST">
         {% csrf_token %}
         <input type="submit" value = "Yes, delete">
+        <br/>
+        <br/>
+        <input type="submit" value="No, don't delete" onclick= " window.location.href = '{% url 'item:item_view' %}'; return false;">
     </form>
 {% endblock %}

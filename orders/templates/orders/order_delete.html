@@ -6,10 +6,13 @@
 
 {% block content %}
 
-    <p>Are you sure you want to delete order no: {{ order.id }}?</p>
+    <p>Are you sure you want to delete order no: {{ order.id }} ?</p>
 
     <form action="" method="POST">
         {% csrf_token %}
         <input type="submit" value = "Yes, delete">
+        <br/>
+        <br/>
+        <input type="submit" value="No, don't delete" onclick= " window.location.href = '{% url 'orders:view' %}'; return false;">
     </form>
 {% endblock %}
