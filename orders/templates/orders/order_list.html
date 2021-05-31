@@ -1,4 +1,4 @@
-{% extends 'orders/base1.html' %}
+{% extends 'orders/base.html' %}
 
 {% block title %}
 	View Orders
@@ -12,7 +12,7 @@
 					<th scope="col">Date Created</th>
 					<th scope="col">Date Updated</th>
 					<th scope="col">Order Id</th>
-					<th scope="col">Amount</th>
+					<th scope="col">Amount (Rs)</th>
 					{% if privilege %}
 						<th scope = "col">Customer</th>
 						<th scope="col">Payment</th>
@@ -36,7 +36,7 @@
 						{% if privilege %}
 							{% if ord.paid %}
 								<td>
-									<button class = "btn btn-success", type="submit", onclick="location.href='{% url 'orders:order_update_pay' ord.id %}'">Set Not Paid</button>
+									<button class = "btn btn-success", type="submit", onclick="location.href='{% url 'orders:order_update_pay' ord.id %}'">Paid</button>
 								</td>
 							{% else %}
 								<td>
@@ -45,7 +45,7 @@
 							{% endif %}
 							{% if ord.delivered %}
 								<td>
-									<button class = "btn btn-success" type="submit", onclick="location.href='{% url 'orders:order_update_delivery' ord.id %}'">Set Not Delivered</button>
+									<button class = "btn btn-success" type="submit", onclick="location.href='{% url 'orders:order_update_delivery' ord.id %}'">Delivered</button>
 								</td>
 							{% else %}
 								<td>
@@ -55,7 +55,7 @@
 							<td style="vertical-align: middle;">
 								{% if ord.paid and ord.delivered %}
 									<a href="{% url 'orders:order_delete' ord.id %}">
-										<i class="glyphicon glyphicon-trash"></i>
+										<button class = "btn btn-success", style="background-color: red; color: black;" type="submit",  background-color="#FF0000", onclick="location.href='{% url 'orders:order_delete' ord.id %}'">Delete</button>
 									</a>	
 								{% endif %}
 							</td>
