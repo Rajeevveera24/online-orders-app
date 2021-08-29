@@ -9,5 +9,5 @@ class RegisterForm(UserCreationForm):
     # shop_name = forms.CharField(max_length = 200)
 
     class Meta:
-	    model = User
-	    fields = ["username", "password1", "password2"]
+        model = User
+        fields = ["username", "password1", "password2"]
